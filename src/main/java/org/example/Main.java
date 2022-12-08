@@ -5,27 +5,27 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.example.GenerateQRCode.generateQRcode;
+import static org.example.GenerateQRCode.*;
+import static org.example.ReadQRcode.readQRcode;
 
 public class Main {
     public static void main(String args[]) throws WriterException, IOException, NotFoundException
     {
-        //data that we want to store in the QR code
-        String str= "Hinoveanu Razvan";
-        //path where we want to get QR Code
-        String path = "Quote.png";
-        //Encoding charset to be used
-        String charset = "UTF-8";
-        Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-        //generates QR code with Low level(L) error correction capability
-        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-        //invoking the user-defined method that creates the QR code
-        generateQRcode(str, path, charset, hashMap, 200, 200);//increase or decrease height and width accodingly
-        //prints if the QR code is generated
-        System.out.println("QR Code created successfully.");
+        File file = new File("Studenti.txt");
+        GUI gui = new GUI(file);
+        gui.setVisible(true);
+        gui.setLocationRelativeTo(null);
+        gui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        String  path  =  "src/main/java/Quote.png";
+        String  charset  =  "UTF-8";
+        Map<EncodeHintType,  ErrorCorrectionLevel>  hintMap  =  new  HashMap<EncodeHintType,  ErrorCorrectionLevel>();
+        hintMap.put(EncodeHintType.ERROR_CORRECTION,  ErrorCorrectionLevel.L);
+        System.out.println("Data  stored  in  the  QR  Code  is:  \n"+  readQRcode(path,  charset,  hintMap));
     }
 }
